@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Keshav — Portfolio</title>
+    <!-- Tailwind CDN for quick styling (swap for production setup later) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.11.0"></script>
+    <meta name="description" content="Keshav's portfolio built with HTMX" />
+  </head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
+    <!-- Header (loaded via HTMX) -->
+    <div hx-get="/partials/header.html" hx-swap="outerHTML" class="transition"></div>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+      <!-- Hero -->
+      <section id="hero" class="mb-12">
+        <div class="flex items-center gap-6">
+          <img src="/assets/avatar.svg" alt="avatar" class="w-28 h-28 rounded-full shadow-md" />
+          <div>
+            <h1 class="text-3xl font-bold">Hi — I'm Keshav</h1>
+            <p class="text-gray-600 mt-1">Frontend developer focused on small, fast, delightful experiences using HTMX & vanilla JS.</p>
+            <p class="mt-3"><a hx-get="/partials/contact.html" hx-target="#modal" hx-trigger="click" href="#" class="text-indigo-600 hover:underline">Contact me</a></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects (dynamically loaded) -->
+      <section id="projects" class="mb-12" hx-get="/partials/projects.html" hx-trigger="load" hx-swap="innerHTML">
+        <!-- Placeholder while projects load -->
+        <div class="animate-pulse bg-white shadow rounded p-6">Loading projects…</div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="prose">
+        <h2>About</h2>
+        <p>I'm a developer building small, maintainable sites and UIs with modern progressive enhancement techniques.</p>
+      </section>
+    </main>
+
+    <!-- Modal target for HTMX swaps -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center p-6 pointer-events-none"></div>
+
+    <!-- Simple HTMX helper (optional) -->
+    <script>
+      document.body.addEventListener('htmx:afterSwap', (e) => {
+        // Move modal content into place with pointer events enabled
+        if (e.detail.target.id === 'modal' && document.getElementById('modal').innerHTML.trim() !== '') {
+          document.getElementById('modal').classList.remove('pointer-events-none');
+        }
+      });
+
+      document.body.addEventListener('click', (e) => {
+        if (e.target.matches('[data-close-modal]')) {
+          document.getElementById('modal').innerHTML = '';
+          document.getElementById('modal').classList.add('pointer-events-none');
+        }
+      });
+    </script>
+  </body>
+</html>
