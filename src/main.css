@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Removed custom prose class to avoid circular dependency */
+
 /* Theme variables (light defaults) */
 :root{
   --bg: #EFECE3;       /* light background */
@@ -11,6 +13,11 @@
   --muted: #8FABD4;    /* muted */
   --card-bg: #FFFFFF;  /* card bg */
   --card-shadow: 0 1px 2px rgba(0,0,0,0.06);
+
+  --color-bg-light: #f9fafb; /* Light background */
+  --color-text-light: #1f2937; /* Light text */
+  --color-primary-light: #3b82f6; /* Light primary */
+  --color-secondary-light: #f59e0b; /* Light secondary */
 }
 
 /* Dark theme overrides */
@@ -22,6 +29,11 @@
   --muted: #739EC9;
   --card-bg: #0b0b0b;
   --card-shadow: 0 1px 2px rgba(255,255,255,0.03);
+
+  --color-bg-dark: #1f2937; /* Dark background */
+  --color-text-dark: #f9fafb; /* Dark text */
+  --color-primary-dark: #60a5fa; /* Dark primary */
+  --color-secondary-dark: #fbbf24; /* Dark secondary */
 }
 
 /* Apply base */
@@ -61,3 +73,32 @@ h1, h2, h3 { @apply font-semibold }
 
 /* Small refinements */
 #theme-toggle { border: none; background: transparent; }
+
+/* Body background and text color for light and dark mode */
+body {
+  background-color: var(--color-bg-light);
+  color: var(--color-text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-dark);
+}
+
+/* Utility classes for primary and secondary colors */
+.text-primary {
+  color: var(--color-primary-light);
+}
+
+body.dark .text-primary {
+  color: var(--color-primary-dark);
+}
+
+.text-secondary {
+  color: var(--color-secondary-light);
+}
+
+body.dark .text-secondary {
+  color: var(--color-secondary-dark);
+}
