@@ -1,10 +1,33 @@
-<header class="bg-white shadow-sm">
+<header class="shadow-sm bg-layer">
   <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="/" class="font-bold">Keshav</a>
-    <nav class="space-x-4 text-sm">
-      <a href="#projects" class="text-gray-600 hover:text-gray-900">Projects</a>
-      <a href="#about" class="text-gray-600 hover:text-gray-900">About</a>
-      <a hx-get="/partials/contact.html" hx-target="#modal" href="#" class="text-indigo-600">Contact</a>
-    </nav>
+    <div class="flex items-center gap-4">
+      <nav class="space-x-4 text-sm hidden sm:block">
+        <a href="#projects" class="text-muted hover:text-primary">Projects</a>
+        <a href="#about" class="text-muted hover:text-primary">About</a>
+        <a hx-get="/partials/contact.html" hx-target="#modal" href="#" class="text-primary">Contact</a>
+      </nav>
+
+      <button id="theme-toggle" aria-label="Toggle theme" aria-pressed="false" class="p-2 rounded focus:outline-none">
+        <!-- Sun -->
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="4" fill="currentColor" />
+          <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 2v2" />
+            <path d="M12 20v2" />
+            <path d="M4.2 4.2l1.4 1.4" />
+            <path d="M18.4 18.4l1.4 1.4" />
+            <path d="M2 12h2" />
+            <path d="M20 12h2" />
+            <path d="M4.2 19.8l1.4-1.4" />
+            <path d="M18.4 5.6l1.4-1.4" />
+          </g>
+        </svg>
+        <!-- Moon -->
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+        </svg>
+      </button>
+    </div>
   </div>
 </header>

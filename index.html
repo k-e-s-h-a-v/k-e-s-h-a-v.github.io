@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Keshav — Portfolio</title>
-    <!-- Tailwind CDN for quick styling (swap for production setup later) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/main.css" />
     <!-- HTMX -->
+    <!-- Tailwind will be processed via PostCSS + Vite -->
     <script src="https://unpkg.com/htmx.org@1.11.0"></script>
+    <script src="/js/theme.js" defer></script>
     <meta name="description" content="Keshav's portfolio built with HTMX" />
   </head>
   <body class="bg-gray-50 text-gray-900 antialiased">
@@ -30,7 +31,7 @@
       <!-- Projects (dynamically loaded) -->
       <section id="projects" class="mb-12" hx-get="/partials/projects.html" hx-trigger="load" hx-swap="innerHTML">
         <!-- Placeholder while projects load -->
-        <div class="animate-pulse bg-white shadow rounded p-6">Loading projects…</div>
+        <div class="card animate-pulse p-6">Loading projects…</div>
       </section>
 
       <!-- About -->
