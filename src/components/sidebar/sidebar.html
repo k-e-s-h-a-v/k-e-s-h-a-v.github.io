@@ -1,13 +1,61 @@
 <div class="sidebar inset-y-0 left-0 w-1/4 bg-gray-800 text-white p-6">
-  <h1 class="text-3xl font-bold mb-4">Keshav Raj</h1>
-  <p class="mb-2">Full-stack Engineer (Python/React)</p>
-  <p class="mb-4">keshav.rajsspn@gmail.com</p>
-  <nav>
-    <ul>
-      <li><a href="#experience" class="block py-2">Experience</a></li>
-      <li><a href="#projects" class="block py-2">Projects</a></li>
-      <li><a href="#education" class="block py-2">Education</a></li>
-      <li><a href="#skills" class="block py-2">Skills</a></li>
-    </ul>
-  </nav>
+    <div class="flex justify-center mb-4">
+        <img 
+            src="https://avatars.githubusercontent.com/u/59414868?v=4" 
+            alt="Profile Picture" 
+            class="w-32 h-32 rounded-full object-cover border-4 border-gray-600"
+        />
+    </div>
+    <h1 class="text-3xl font-bold mb-4">Keshav Raj</h1>
+    <p class="mb-2">Full-stack Engineer (Python/React)</p>
+    <p class="mb-4">keshav.rajsspn@gmail.com</p>
+    <nav>
+        <ul>
+            <li>
+                <a
+                    id="nav-skills"
+                    href="#skills"
+                    hx-get="/src/components/skills/skills.html"
+                    hx-target="#content"
+                    hx-swap="innerHTML"
+                    class="block py-2 cursor-pointer hover:text-gray-300"
+                    >Skills</a
+                >
+            </li>
+            <li>
+                <a
+                    id="nav-projects"
+                    href="#projects"
+                    hx-get="/src/components/projects/projects.html"
+                    hx-target="#content"
+                    hx-swap="innerHTML"
+                    class="block py-2 cursor-pointer hover:text-gray-300"
+                    >Projects</a
+                >
+            </li>
+            <li>
+                <a
+                    id="nav-experience"
+                    href="#experience"
+                    hx-get="/src/components/experience/experience.html"
+                    hx-target="#content"
+                    hx-swap="innerHTML"
+                    class="block py-2 cursor-pointer hover:text-gray-300"
+                    >Experience</a
+                >
+            </li>
+
+            <li>
+                <a
+                    id="nav-education"
+                    href="#education"
+                    hx-get="/src/components/education/education.html"
+                    hx-target="#content"
+                    hx-swap="innerHTML"
+                    class="block py-2 cursor-pointer hover:text-gray-300"
+                    >Education</a
+                >
+            </li>
+        </ul>
+    </nav>
 </div>
