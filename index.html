@@ -1,196 +1,199 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <link rel="icon" type="image/svg+xml" href="/public/assets/favicon.svg">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Keshav Raj</title>
-    <link rel="stylesheet" href="/src/main.css" />
-    <!-- Load component CSS to prevent FOUC when HTMX loads components -->
-    <link rel="stylesheet" href="/src/components/skills/skills.css" />
+
+<head>
+  <link rel="icon" type="image/svg+xml" href="/public/assets/favicon.svg">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Keshav Raj</title>
+  <!-- <link rel="stylesheet" href="/src/main.css" /> -->
+  <!-- Load component CSS to prevent FOUC when HTMX loads components -->
+  <!-- <link rel="stylesheet" href="/src/components/skills/skills.css" />
     <link rel="stylesheet" href="/src/components/sidebar/sidebar.css" />
-    <link rel="stylesheet" href="/src/components/projects/projects.css" />
-    <!-- HTMX (served from CDN) -->
-    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <link rel="stylesheet" href="/src/components/projects/projects.css" /> -->
+  <!-- HTMX (served from CDN) -->
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
-    <script src="/js/theme.js" defer></script>
-    <meta name="description" content="Keshav's portfolio built with HTMX" />
-  </head>
-  <body class="bg-gray-50 text-gray-900 antialiased body">
+  <!-- <script src="/js/theme.js" defer></script> -->
+  <meta name="description" content="Keshav's portfolio built with HTMX" />
+</head>
 
-    <!-- Sidebar -->
-    <div hx-get="/src/components/sidebar/sidebar.html" hx-trigger="load" hx-swap="outerHTML"></div>
+<body class="bg-gray-50 text-gray-900 antialiased body">
 
-    <!-- Content Section -->
-    <div id="content" class="p-6 flex-1">
-      <div id="welcome-message" class="flex items-center justify-center min-h-[calc(100vh-3rem)]">
-        <div class="text-center">
-          <h2 class="text-2xl font-bold mb-4">
-            <span id="typing-text"></span><span id="typing-cursor" class="animate-pulse">|</span>
-          </h2>
-          <p id="subtitle-text" class="opacity-0"></p>
-        </div>
+  <!-- Sidebar -->
+  <div hx-get="/partials/sidebar.html" hx-trigger="load" hx-swap="outerHTML"></div>
+
+  <!-- Content Section -->
+  <div id="content" class="p-6 flex-1">
+    <div id="welcome-message" class="flex items-center justify-center min-h-[calc(100vh-3rem)]">
+      <div class="text-center">
+        <h2 class="text-2xl font-bold mb-4">
+          <span id="typing-text"></span><span id="typing-cursor" class="animate-pulse">|</span>
+        </h2>
+        <p id="subtitle-text" class="opacity-0"></p>
       </div>
     </div>
+  </div>
 
-    <!-- Modal target for HTMX swaps -->
-    <div id="modal" class="fixed inset-0 flex items-center justify-center p-6 pointer-events-none"></div>
+  <!-- Modal target for HTMX swaps -->
+  <div id="modal" class="fixed inset-0 flex items-center justify-center p-6 pointer-events-none"></div>
+  <script type="module" src="/src/main.js"></script>
+  <!-- Typing effect for welcome message -->
+  <script>
+    function initTypingEffect() {
+      const typingText = document.getElementById('typing-text');
+      const subtitleText = document.getElementById('subtitle-text');
+      const welcomeMessage = document.getElementById('welcome-message');
 
-    <!-- Typing effect for welcome message -->
-    <script>
-      function initTypingEffect() {
+      // Only run if welcome message is visible
+      if (!typingText || !welcomeMessage || !welcomeMessage.parentElement) return;
+
+      const text = 'Welcome';
+      const subtitle = 'Select a section from the sidebar to view its content.';
+      let charIndex = 0;
+
+      function typeChar() {
+        if (charIndex < text.length) {
+          typingText.textContent += text[charIndex];
+          charIndex++;
+          setTimeout(typeChar, 100); // Adjust speed here (milliseconds per character)
+        } else {
+          // Show subtitle after typing is complete
+          setTimeout(() => {
+            if (subtitleText) {
+              subtitleText.textContent = subtitle;
+              subtitleText.classList.remove('opacity-0');
+              subtitleText.classList.add('transition-opacity', 'duration-500', 'opacity-100');
+            }
+          }, 300);
+        }
+      }
+
+      // Start typing effect
+      typeChar();
+    }
+
+    // Initialize typing effect when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTypingEffect);
+    } else {
+      initTypingEffect();
+    }
+
+  </script>
+
+  <!-- HTMX helper for modal handling and scroll navigation -->
+  <script>
+    document.body.addEventListener('htmx:afterSwap', (e) => {
+      // Move modal content into place with pointer events enabled
+      if (e.detail.target.id === 'modal' && document.getElementById('modal').innerHTML.trim() !== '') {
+        document.getElementById('modal').classList.remove('pointer-events-none');
+      }
+
+      // Re-initialize typing effect if welcome message is swapped back in via HTMX
+      if (e.detail.target.id === 'content' && document.getElementById('welcome-message')) {
+        // Reset and restart typing effect
         const typingText = document.getElementById('typing-text');
         const subtitleText = document.getElementById('subtitle-text');
-        const welcomeMessage = document.getElementById('welcome-message');
-        
-        // Only run if welcome message is visible
-        if (!typingText || !welcomeMessage || !welcomeMessage.parentElement) return;
-        
-        const text = 'Welcome';
-        const subtitle = 'Select a section from the sidebar to view its content.';
-        let charIndex = 0;
-        
-        function typeChar() {
-          if (charIndex < text.length) {
-            typingText.textContent += text[charIndex];
-            charIndex++;
-            setTimeout(typeChar, 100); // Adjust speed here (milliseconds per character)
-          } else {
-            // Show subtitle after typing is complete
-            setTimeout(() => {
-              if (subtitleText) {
-                subtitleText.textContent = subtitle;
-                subtitleText.classList.remove('opacity-0');
-                subtitleText.classList.add('transition-opacity', 'duration-500', 'opacity-100');
-              }
-            }, 300);
-          }
+        if (typingText) typingText.textContent = '';
+        if (subtitleText) {
+          subtitleText.textContent = '';
+          subtitleText.classList.remove('opacity-100');
+          subtitleText.classList.add('opacity-0');
         }
-        
-        // Start typing effect
-        typeChar();
+        setTimeout(initTypingEffect, 100);
       }
-      
-      // Initialize typing effect when DOM is ready
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTypingEffect);
-      } else {
-        initTypingEffect();
-      }
-      
-    </script>
+    });
 
-    <!-- HTMX helper for modal handling and scroll navigation -->
-    <script>
+    document.body.addEventListener('click', (e) => {
+      if (e.target.matches('[data-close-modal]')) {
+        document.getElementById('modal').innerHTML = '';
+        document.getElementById('modal').classList.add('pointer-events-none');
+      }
+    });
+
+    // Scroll-based section navigation
+    (function () {
+      const sections = ['nav-skills', 'nav-projects', 'nav-experience', 'nav-education'];
+      let currentSectionIndex = -1;
+      let scrollTimeout = null;
+      let isScrolling = false;
+      let scrollNavigationEnabled = false;
+
+      // Initialize scroll navigation after sidebar loads
       document.body.addEventListener('htmx:afterSwap', (e) => {
-        // Move modal content into place with pointer events enabled
-        if (e.detail.target.id === 'modal' && document.getElementById('modal').innerHTML.trim() !== '') {
-          document.getElementById('modal').classList.remove('pointer-events-none');
-        }
-        
-        // Re-initialize typing effect if welcome message is swapped back in via HTMX
-        if (e.detail.target.id === 'content' && document.getElementById('welcome-message')) {
-          // Reset and restart typing effect
-          const typingText = document.getElementById('typing-text');
-          const subtitleText = document.getElementById('subtitle-text');
-          if (typingText) typingText.textContent = '';
-          if (subtitleText) {
-            subtitleText.textContent = '';
-            subtitleText.classList.remove('opacity-100');
-            subtitleText.classList.add('opacity-0');
-          }
-          setTimeout(initTypingEffect, 100);
-        }
-      });
-
-      document.body.addEventListener('click', (e) => {
-        if (e.target.matches('[data-close-modal]')) {
-          document.getElementById('modal').innerHTML = '';
-          document.getElementById('modal').classList.add('pointer-events-none');
-        }
-      });
-
-      // Scroll-based section navigation
-      (function() {
-        const sections = ['nav-skills', 'nav-projects', 'nav-experience', 'nav-education'];
-        let currentSectionIndex = -1;
-        let scrollTimeout = null;
-        let isScrolling = false;
-        let scrollNavigationEnabled = false;
-
-        // Initialize scroll navigation after sidebar loads
-        document.body.addEventListener('htmx:afterSwap', (e) => {
-          // Check if sidebar was just loaded
-          if (e.detail.target.querySelector && e.detail.target.querySelector('.sidebar')) {
-            scrollNavigationEnabled = true;
-            // Load first section if content is still showing welcome message
-            const content = document.getElementById('content');
-            if (content && content.querySelector('#welcome-message')) {
-              const firstNav = document.getElementById(sections[0]);
-              if (firstNav) {
-                setTimeout(() => {
-                  htmx.trigger(firstNav, 'click');
-                  currentSectionIndex = 0;
-                }, 100);
-              }
-            }
-          }
-        });
-
-        // Handle wheel scroll events
-        let wheelDelta = 0;
-        const scrollThreshold = 50; // Minimum scroll delta to trigger navigation
-
-        window.addEventListener('wheel', (e) => {
-          if (!scrollNavigationEnabled || isScrolling) return;
-
-          wheelDelta += e.deltaY;
-          
-          // Clear existing timeout
-          if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-          }
-
-          // Wait for scroll to settle before navigating
-          scrollTimeout = setTimeout(() => {
-            if (Math.abs(wheelDelta) > scrollThreshold && currentSectionIndex >= 0) {
-              isScrolling = true;
-              
-              if (wheelDelta > 0) {
-                // Scroll down - next section
-                currentSectionIndex = (currentSectionIndex + 1) % sections.length;
-              } else {
-                // Scroll up - previous section
-                currentSectionIndex = (currentSectionIndex - 1 + sections.length) % sections.length;
-              }
-
-              const nextNav = document.getElementById(sections[currentSectionIndex]);
-              if (nextNav) {
-                htmx.trigger(nextNav, 'click');
-              }
-
-              wheelDelta = 0;
-              
-              // Reset scrolling flag after a delay
+        // Check if sidebar was just loaded
+        if (e.detail.target.querySelector && e.detail.target.querySelector('.sidebar')) {
+          scrollNavigationEnabled = true;
+          // Load first section if content is still showing welcome message
+          const content = document.getElementById('content');
+          if (content && content.querySelector('#welcome-message')) {
+            const firstNav = document.getElementById(sections[0]);
+            if (firstNav) {
               setTimeout(() => {
-                isScrolling = false;
-              }, 500);
-            } else {
-              wheelDelta = 0;
+                htmx.trigger(firstNav, 'click');
+                currentSectionIndex = 0;
+              }, 100);
             }
-          }, 150);
-        }, { passive: true });
+          }
+        }
+      });
 
-        // Update current section index when clicking nav links or HTMX loads content
-        sections.forEach((sectionId, index) => {
-          document.body.addEventListener('htmx:beforeRequest', (e) => {
-            const navElement = document.getElementById(sectionId);
-            if (navElement && e.detail.elt === navElement) {
-              currentSectionIndex = index;
+      // Handle wheel scroll events
+      let wheelDelta = 0;
+      const scrollThreshold = 50; // Minimum scroll delta to trigger navigation
+
+      window.addEventListener('wheel', (e) => {
+        if (!scrollNavigationEnabled || isScrolling) return;
+
+        wheelDelta += e.deltaY;
+
+        // Clear existing timeout
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
+
+        // Wait for scroll to settle before navigating
+        scrollTimeout = setTimeout(() => {
+          if (Math.abs(wheelDelta) > scrollThreshold && currentSectionIndex >= 0) {
+            isScrolling = true;
+
+            if (wheelDelta > 0) {
+              // Scroll down - next section
+              currentSectionIndex = (currentSectionIndex + 1) % sections.length;
+            } else {
+              // Scroll up - previous section
+              currentSectionIndex = (currentSectionIndex - 1 + sections.length) % sections.length;
             }
-          });
+
+            const nextNav = document.getElementById(sections[currentSectionIndex]);
+            if (nextNav) {
+              htmx.trigger(nextNav, 'click');
+            }
+
+            wheelDelta = 0;
+
+            // Reset scrolling flag after a delay
+            setTimeout(() => {
+              isScrolling = false;
+            }, 500);
+          } else {
+            wheelDelta = 0;
+          }
+        }, 150);
+      }, { passive: true });
+
+      // Update current section index when clicking nav links or HTMX loads content
+      sections.forEach((sectionId, index) => {
+        document.body.addEventListener('htmx:beforeRequest', (e) => {
+          const navElement = document.getElementById(sectionId);
+          if (navElement && e.detail.elt === navElement) {
+            currentSectionIndex = index;
+          }
         });
-      })();
-    </script>
-  </body>
+      });
+    })();
+  </script>
+</body>
+
 </html>
