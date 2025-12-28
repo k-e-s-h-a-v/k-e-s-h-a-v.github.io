@@ -1,0 +1,218 @@
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.dark .project-card {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover::before {
+  transform: scaleX(1);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.dark .project-card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.project-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  /* background: linear-gradient(135deg, #3b82f6, #8b5cf6); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+
+}
+
+.chrome-icon {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.project-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chrome-badge {
+  background: rgba(251, 191, 36, 0.1);
+  color: #fbbf24;
+}
+
+.dark .project-badge {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.dark .chrome-badge {
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.project-description {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.project-metrics {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--accent);
+  border-radius: 12px;
+}
+
+.dark .project-metrics {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.metric-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.project-demo {
+  margin-bottom: 1.25rem;
+}
+
+.demo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.demo-link:hover {
+  background: rgba(59, 130, 246, 0.2);
+  transform: translateX(4px);
+}
+
+.dark .demo-link {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.dark .demo-link:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.project-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .project-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.project-link:hover {
+  gap: 0.75rem;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

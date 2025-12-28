@@ -1,0 +1,37 @@
+/* Sidebar styling */
+.sidebar {
+  height: 100vh;
+  overflow-y: auto;
+  /* Full height */
+  /* position: fixed; */
+  /* top: 0;
+  left: 0; */
+  background-color: #1a202c;
+  /* Dark gray */
+  color: white;
+  padding: 1.5rem;
+  /* width: 25%; */
+  flex-shrink: 0;
+}
+
+.sidebar h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.sidebar nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+  color: #63b3ed;
+  /* Light blue */
+}
+
