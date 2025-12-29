@@ -179,10 +179,10 @@ h3 {
   font-family: 'Arial', sans-serif;
 }
 
-/* Ensure sidebar and content appear side by side */
+/* Ensure sidebar and content appear side by side on desktop, stacked on mobile */
 .body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
@@ -192,9 +192,26 @@ h3 {
   overflow: hidden;
 }
 
+@media (min-width: 768px) {
+  .body {
+    flex-direction: row;
+  }
+}
+
 /* Make content area scrollable */
 #content {
   overflow-y: auto;
   height: 100vh;
   flex: 1;
+  padding-top: 5rem;
+  /* Space for top sticky bar on mobile */
+  padding-bottom: 5rem;
+  /* Space for bottom sidebar on mobile */
+}
+
+@media (min-width: 768px) {
+  #content {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
 }

@@ -1,17 +1,18 @@
 /* Sidebar styling */
 .sidebar {
-  height: 100vh;
-  overflow-y: auto;
-  /* Full height */
-  /* position: fixed; */
-  /* top: 0;
-  left: 0; */
   background-color: #1a202c;
   /* Dark gray */
   color: white;
-  padding: 1.5rem;
-  /* width: 25%; */
   flex-shrink: 0;
+  overflow: visible;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
 }
 
 .sidebar h1 {
@@ -27,7 +28,7 @@
 .sidebar nav ul li a {
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: all 0.3s;
 }
 
 .sidebar nav ul li a:hover {
@@ -35,3 +36,22 @@
   /* Light blue */
 }
 
+/* Active link styling */
+.sidebar nav ul li a.active {
+  color: #fff;
+  background-color: rgba(37, 99, 235, 0.2);
+  /* bg-blue-600/20 */
+}
+
+@media (min-width: 768px) {
+  .sidebar nav ul li a.active {
+    border-left: 4px solid #3b82f6;
+    /* border-blue-500 */
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar nav ul li a.active {
+    border-bottom: 2px solid #3b82f6;
+  }
+}
