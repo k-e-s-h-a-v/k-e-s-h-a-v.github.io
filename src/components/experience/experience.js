@@ -123,6 +123,10 @@ function initExperience() {
 
         const milestoneEl = document.createElement('div');
         milestoneEl.className = `milestone ${m.isLeft ? 'on-left' : 'on-right'}`;
+        // Mark Infor as current milestone
+        if (exp.company === "Infor" && exp.date.includes("Present")) {
+            milestoneEl.classList.add('is-current');
+        }
         milestoneEl.id = milestoneId;
         milestoneEl.style.left = `${(m.x / width) * 100}%`;
         milestoneEl.style.top = `${m.y}px`;
@@ -143,14 +147,16 @@ function initExperience() {
         popupEl.className = 'experience-popup';
         popupEl.dataset.for = milestoneId;
         popupEl.innerHTML = `
-            ${exp.logo ? `<img src="${exp.logo}" class="popup-logo" alt="${exp.company}">` : ''}
             <div class="popup-header">
-                <div class="popup-title">${exp.role}</div>
-                <div class="popup-company">${exp.company}</div>
-                <div class="popup-date-loc">
-                    <span>${exp.date}</span>
-                    <span>${exp.location}</span>
+                <div class="header-text">
+                    <div class="popup-title">${exp.role}</div>
+                    <div class="popup-company">${exp.company}</div>
                 </div>
+                ${exp.logo ? `<img src="${exp.logo}" class="popup-logo" alt="${exp.company}">` : ''}
+            </div>
+            <div class="popup-date-loc">
+                <span>${exp.date}</span>
+                <span>${exp.location}</span>
             </div>
             <ul class="popup-bullets">
                 ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
@@ -159,6 +165,56 @@ function initExperience() {
 
         container.appendChild(milestoneEl);
         popupsOverlay.appendChild(popupEl);
+    });
+
+    // Inject Map Artifacts
+    const artifacts = [
+        { type: 'mountain', x: 50, y: 100, size: 40 },
+        { type: 'mountain', x: 100, y: 150, size: 60 },
+        { type: 'mountain', x: 130, y: 180, size: 40 },
+        { type: 'forest', x: 600, y: 100, size: 80 },
+        { type: 'forest', x: 650, y: 140, size: 60 },
+        { type: 'river', x: 200, y: 400, width: 400, height: 100 },
+        { type: 'bridge', x: 380, y: 430, size: 50 },
+        { type: 'fort', x: 680, y: 280, size: 70 },
+        { type: 'ruins', x: 50, y: 500, size: 60 },
+        { type: 'serpent', x: 550, y: 750, size: 100 },
+        { type: 'lighthouse', x: 720, y: 900, size: 80 },
+        { type: 'treasure', x: 150, y: 800, size: 40 },
+        { type: 'ship', x: 600, y: 600, size: 50 },
+        { type: 'ship', x: 100, y: 1200, size: 40 },
+        { type: 'forest', x: 50, y: 1400, size: 100 },
+        { type: 'mountain', x: 650, y: 1300, size: 90 },
+        { type: 'compass', x: 50, y: height - 120, size: 120 }
+    ];
+
+    const getArtifactSVG = (type) => {
+        const svgMap = {
+            mountain: '<path d="M0,40 L20,0 L40,40 Z M15,40 L30,10 L45,40 Z" />',
+            river: '<path d="M0,50 Q100,0 200,50 T400,50" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="10,5" />',
+            bridge: '<path d="M0,20 Q25,0 50,20 L50,30 Q25,10 0,30 Z" />',
+            fort: '<path d="M0,50 L0,20 L10,20 L10,10 L20,10 L20,20 L30,20 L30,10 L40,10 L40,20 L50,20 L50,50 Z" />',
+            treasure: '<path d="M0,30 L50,30 L50,50 L0,50 Z M5,30 Q25,0 45,30 Z" />',
+            ship: '<path d="M10,30 Q25,50 40,30 L50,30 L40,10 L10,10 L0,30 Z M25,10 L25,0 L35,5 Z" />',
+            compass: '<circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50,10 L55,45 L50,50 L45,45 Z M50,90 L45,55 L50,50 L55,55 Z" fill="currentColor"/>',
+            forest: '<path d="M10,40 L20,10 L30,40 Z M25,40 L35,15 L45,40 Z M40,40 L50,20 L60,40 Z" />',
+            ruins: '<path d="M0,40 L0,10 L10,10 L10,40 M20,40 L20,20 L30,20 L30,40 M40,40 L40,5 L50,5 L50,40" fill="none" stroke="currentColor" stroke-width="2" />',
+            serpent: '<path d="M0,50 Q25,0 50,50 T100,50 M80,30 Q90,20 100,30" fill="none" stroke="currentColor" stroke-width="3" />',
+            lighthouse: '<path d="M10,50 L20,0 L30,0 L40,50 Z M20,10 L30,10 M20,20 L30,20" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="25" cy="5" r="3" />'
+        };
+        return svgMap[type] || '';
+    };
+
+    artifacts.forEach(art => {
+        const artEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        artEl.setAttribute('class', 'map-artifact');
+        artEl.style.left = `${art.x}px`;
+        artEl.style.top = `${art.y}px`;
+        artEl.style.width = `${art.size || art.width}px`;
+        artEl.style.height = `${art.size || art.height}px`;
+        artEl.setAttribute('viewBox', `0 0 ${art.size || art.width || 60} ${art.size || art.height || 60}`);
+        artEl.innerHTML = getArtifactSVG(art.type);
+        container.appendChild(artEl);
     });
 
     expContainer.style.height = `${height + 200}px`;
@@ -176,7 +232,7 @@ function initExperience() {
 
             const distance = Math.sqrt(Math.pow(e.clientX - markerX, 2) + Math.pow(e.clientY - markerY, 2));
 
-            if (distance < 200) {
+            if (distance < 50) { // Reduced radius to 50px
                 popup.style.opacity = '1';
                 popup.style.visibility = 'visible';
 
