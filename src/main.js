@@ -9,5 +9,9 @@ import './components/skills/skills.css'
 import './components/projects/projects.js'
 import './components/projects/projects.css'
 
+// experience
+import './components/experience/experience.js'
+import './components/experience/experience.css'
+
 // main global CSS
 import './main.css'

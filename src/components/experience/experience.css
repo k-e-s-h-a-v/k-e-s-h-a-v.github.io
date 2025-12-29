@@ -1,0 +1,215 @@
+/* Experience Curved Road Design */
+.experience-container {
+    position: relative;
+    width: 100%;
+    min-height: 1000px;
+    padding: 2rem 0;
+    overflow: visible;
+}
+
+.road-svg {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.road-path {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 12 8;
+    opacity: 0.4;
+    filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.road-path-blur {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 12;
+    stroke-linecap: round;
+    opacity: 0.1;
+    filter: blur(4px);
+}
+
+.milestones-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.milestone {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.milestone-marker {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border: 4px solid var(--bg);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--primary);
+    transition: all 0.3s ease;
+}
+
+.milestone:hover .milestone-marker {
+    transform: scale(1.5);
+    background: #fff;
+    box-shadow: 0 0 25px var(--primary);
+}
+
+.milestone-label {
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    text-align: left;
+    pointer-events: none;
+    background: var(--bg);
+    /* Use main bg for better contrast in dark mode */
+    padding: 12px 20px;
+    border-radius: 14px;
+    border: 1px solid var(--primary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.milestone.on-left .milestone-label {
+    left: auto;
+    right: 40px;
+    text-align: right;
+}
+
+.label-role {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.milestone.on-left .label-role {
+    flex-direction: row-reverse;
+}
+
+.label-meta {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text);
+    /* More readable than muted */
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.experience-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 650px;
+    background: var(--card-bg);
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 1.75rem;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-out;
+    z-index: 2147483647;
+    /* Literal maximum z-index */
+    pointer-events: none;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.milestone:hover .experience-popup {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Logos */
+.company-logo {
+    height: 1.2em;
+    /* Scales with parent text height */
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.popup-logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+.popup-header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.popup-title {
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 1.15rem;
+}
+
+.popup-company {
+    font-size: 1rem;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.popup-date-loc {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.popup-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.popup-bullets li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.popup-bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Dark mode adjustments */
+.dark .experience-popup {
+    background: #111;
+    border-color: #222;
+}
+
+.dark .road-path {
+    stroke: #5682B1;
+}

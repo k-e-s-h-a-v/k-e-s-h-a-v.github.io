@@ -1,21 +1,19 @@
-<section id="experience" class="mb-8">
-  <h2 class="text-2xl font-bold mb-4">Experience</h2>
-  <div>
-    <h3 class="font-semibold">Infor</h3>
-    <p class="text-sm">Jul 2024 – Present</p>
-    <ul class="list-disc pl-6">
-      <li>Integrated Apache Superset with Delta Lake, launching 20 real-time dashboards for 20,000+ users.</li>
-      <li>Diagnosed and resolved memory leaks, improving performance by 90%.</li>
-      <li>Developed a WYSIWYG email template editor, saving 8 hours weekly.</li>
-    </ul>
-  </div>
-  <div>
-    <h3 class="font-semibold">Albanero (Acquired by Infor)</h3>
-    <p class="text-sm">Jun 2021 – Jul 2024</p>
-    <ul class="list-disc pl-6">
-      <li>Reduced memory usage in pipelines by 90%, saving 20 hours weekly.</li>
-      <li>Led a team of 6 engineers to deliver key products, improving time-to-market.</li>
-      <li>Migrated 20+ microfrontends from Vue.js to ReactJS, enhancing performance.</li>
-    </ul>
-  </div>
+<section id="experience" class="mb-8 relative transition-colors duration-300">
+    <div
+        class="sticky top-0 z-[110] bg-[#FFFFFF]/80 dark:bg-[#000000]/80 backdrop-blur-md py-4 flex justify-between items-center border-b border-accent/20 mb-8">
+        <div class="text-sm font-medium text-primary">Experience Path</div>
+        <div class="text-sm text-muted animate-pulse">Hover over milestones to see details</div>
+    </div>
+
+    <div class="experience-container">
+        <svg class="road-svg" preserveAspectRatio="none">
+            <path class="road-path" d=""></path>
+        </svg>
+        <div class="milestones-container">
+            <!-- Dynamically populated by experience.js -->
+        </div>
+    </div>
+
+    <!-- Ensure script is available if not already loaded via main.js or if HTMX needs it -->
+    <script src="/src/components/experience/experience.js"></script>
 </section>
