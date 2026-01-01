@@ -6,11 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Keshav Raj</title>
-  <!-- <link rel="stylesheet" href="/src/main.css" /> -->
-  <!-- Load component CSS to prevent FOUC when HTMX loads components -->
-  <!-- <link rel="stylesheet" href="/src/components/skills/skills.css" />
-    <link rel="stylesheet" href="/src/components/sidebar/sidebar.css" />
-    <link rel="stylesheet" href="/src/components/projects/projects.css" /> -->
+
   <!-- HTMX (served from CDN) -->
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
@@ -67,7 +63,8 @@
 
   <!-- Content Section -->
   <div id="content" class="p-6 flex-1">
-    <div hx-get="/src/components/welcome/welcome.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div id="welcome-container" hx-get="/src/components/welcome/welcome.html" hx-trigger="load" hx-swap="outerHTML">
+    </div>
   </div>
 
   <!-- Modal target for HTMX swaps -->
@@ -84,7 +81,7 @@
       }
 
       // Re-initialize welcome component if it was swapped in via HTMX
-      if (e.detail.target.id === 'content' && document.getElementById('welcome-message')) {
+      if ((e.detail.target.id === 'content' || e.detail.target.id === 'welcome-container') && document.getElementById('welcome-message')) {
         // Wait for component scripts to load, then initialize
         setTimeout(() => {
           if (window.welcomeComponent) {

@@ -13,5 +13,9 @@ import './components/projects/projects.css'
 import './components/experience/experience.js'
 import './components/experience/experience.css'
 
+// welcome
+import './components/welcome/welcome.js'
+import './components/welcome/welcome.css'
+
 // main global CSS
 import './main.css'

@@ -223,6 +223,8 @@ function createFloatingLogos() {
     animate();
 }
 
+let typingTimeout = null;
+
 function initTypingEffect() {
     const typingText = document.getElementById('typing-text');
     const subtitleText = document.getElementById('subtitle-text');
@@ -230,6 +232,20 @@ function initTypingEffect() {
 
     // Only run if welcome message is visible
     if (!typingText || !welcomeMessage || !welcomeMessage.parentElement) return;
+
+    // Reset state
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        typingTimeout = null;
+    }
+
+    // Clear text content immediately
+    typingText.textContent = '';
+    if (subtitleText) {
+        subtitleText.textContent = '';
+        subtitleText.classList.add('opacity-0');
+        subtitleText.classList.remove('transition-opacity', 'duration-500', 'opacity-100');
+    }
 
     const text = 'Welcome';
     const subtitle = 'Select a section from the sidebar to know me.';
@@ -239,10 +255,10 @@ function initTypingEffect() {
         if (charIndex < text.length) {
             typingText.textContent += text[charIndex];
             charIndex++;
-            setTimeout(typeChar, 100); // Adjust speed here (milliseconds per character)
+            typingTimeout = setTimeout(typeChar, 100); // Adjust speed here (milliseconds per character)
         } else {
             // Show subtitle after typing is complete
-            setTimeout(() => {
+            typingTimeout = setTimeout(() => {
                 if (subtitleText) {
                     subtitleText.textContent = subtitle;
                     subtitleText.classList.remove('opacity-0');
@@ -265,15 +281,13 @@ function cleanupWelcome() {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
+    if (typingTimeout) {
+        clearTimeout(typingTimeout);
+        typingTimeout = null;
+    }
     particles = [];
 }
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTypingEffect);
-} else {
-    initTypingEffect();
-}
 
 // Export functions for external use
 if (typeof window !== 'undefined') {
