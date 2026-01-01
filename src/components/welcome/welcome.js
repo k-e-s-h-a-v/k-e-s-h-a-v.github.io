@@ -197,11 +197,26 @@ function createFloatingLogos() {
     const containerWidth = rect.width;
     const containerHeight = rect.height;
 
-    // Create 25 particles with physics
-    const logoCount = 25;
+    // Deduplicate skills by icon to avoid visual duplicates
+    const uniqueSkills = [];
+    const seenIcons = new Set();
+
+    for (const skill of allSkills) {
+        if (!seenIcons.has(skill.icon)) {
+            seenIcons.add(skill.icon);
+            uniqueSkills.push(skill);
+        }
+    }
+
+    // Create particles (max 25 or number of unique skills)
+    const logoCount = Math.min(25, uniqueSkills.length);
+    const availableSkills = [...uniqueSkills];
 
     for (let i = 0; i < logoCount; i++) {
-        const skill = allSkills[Math.floor(Math.random() * allSkills.length)];
+        // Randomly select distinct skills
+        const randomIndex = Math.floor(Math.random() * availableSkills.length);
+        const skill = availableSkills.splice(randomIndex, 1)[0];
+
         const particle = new Particle(skill, containerWidth, containerHeight, particles);
         particle.createDOMElement(container);
         particles.push(particle);
