@@ -3,7 +3,7 @@ async function fetchVSCodeExtensionStats(extensionId) {
   try {
     // VS Code Marketplace REST API endpoint
     const apiUrl = 'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery';
-    
+
     const requestBody = {
       filters: [{
         criteria: [{
@@ -28,7 +28,7 @@ async function fetchVSCodeExtensionStats(extensionId) {
     }
 
     const data = await response.json();
-    
+
     if (data.results && data.results[0] && data.results[0].extensions && data.results[0].extensions[0]) {
       const extension = data.results[0].extensions[0];
       return {
@@ -37,7 +37,7 @@ async function fetchVSCodeExtensionStats(extensionId) {
         ratingCount: extension.statistics?.find(s => s.statisticName === 'ratingcount')?.value || 0
       };
     }
-    
+
     return null;
   } catch (error) {
     console.warn(`Failed to fetch stats for ${extensionId}:`, error);
@@ -65,19 +65,19 @@ function formatRating(rating) {
 // Update extension metrics
 async function updateExtensionMetrics() {
   const extensionCards = document.querySelectorAll('.project-card[data-extension]');
-  
+
   for (const card of extensionCards) {
     const extensionId = card.getAttribute('data-extension');
     const installsElement = card.querySelector('[data-metric="installs"]');
     const ratingElement = card.querySelector('[data-metric="rating"]');
-    
+
     // Show loading state
     if (installsElement) installsElement.textContent = '...';
     if (ratingElement) ratingElement.textContent = '...';
-    
+
     try {
       const stats = await fetchVSCodeExtensionStats(extensionId);
-      
+
       if (stats) {
         if (installsElement) {
           installsElement.textContent = formatNumber(stats.installs);
@@ -90,7 +90,7 @@ async function updateExtensionMetrics() {
         // For now, show placeholder
         if (installsElement) installsElement.textContent = 'Loading...';
         if (ratingElement) ratingElement.textContent = 'Loading...';
-        
+
         // Try alternative method: fetch extension page and parse
         try {
           const pageUrl = `https://marketplace.visualstudio.com/items?itemName=${extensionId}`;

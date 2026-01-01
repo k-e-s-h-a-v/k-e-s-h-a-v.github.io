@@ -215,3 +215,40 @@ h3 {
     padding-bottom: 1.5rem;
   }
 }
+
+/* Floating logos styles - optimized for physics simulation */
+.floating-logo {
+  pointer-events: auto;
+  cursor: pointer;
+  will-change: transform;
+  transform-origin: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Smooth rendering for animations */
+#floating-logos {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+}
+
+#floating-logos .floating-logo {
+  pointer-events: auto;
+}
+
+/* Ensure glassmorphism works well on mobile */
+@media (max-width: 768px) {
+  #welcome-message .backdrop-blur-md {
+    backdrop-filter: blur(8px);
+  }
+
+  #welcome-message h2 {
+    font-size: 2.5rem !important;
+  }
+
+  #welcome-message p {
+    font-size: 1.125rem !important;
+  }
+}

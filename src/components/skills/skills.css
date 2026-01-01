@@ -150,24 +150,39 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.skill-card:nth-child(1) { animation-delay: 0.1s; }
-.skill-card:nth-child(2) { animation-delay: 0.2s; }
-.skill-card:nth-child(3) { animation-delay: 0.3s; }
-.skill-card:nth-child(4) { animation-delay: 0.4s; }
-.skill-card:nth-child(5) { animation-delay: 0.5s; }
+.skill-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.skill-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.skill-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.skill-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.skill-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
 
 @media (max-width: 767px) {
   .skills-grid {
     column-count: 1;
     column-width: 100%;
   }
-  
+
   .skill-card {
     max-width: 100%;
   }
@@ -184,4 +199,3 @@
     column-count: 3;
   }
 }
-

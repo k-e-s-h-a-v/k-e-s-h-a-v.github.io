@@ -1,0 +1,20 @@
+<div id="welcome-message" class="flex items-center justify-center min-h-[calc(100vh-3rem)] relative overflow-hidden">
+    <!-- Animated Background with Gradients -->
+    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 via-indigo-950 to-purple-900 opacity-95"></div>
+
+    <!-- Animated Floating Skill Logos -->
+    <div id="floating-logos" class="absolute inset-0 overflow-hidden"></div>
+
+    <!-- Glassmorphism Content Card -->
+    <div
+        class="relative z-10 text-center max-w-4xl mx-auto px-8 py-16 backdrop-blur-md bg-white/10 rounded-3xl border border-white/20 shadow-2xl">
+        <h2
+            class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <span id="typing-text"></span><span id="typing-cursor" class="animate-pulse">|</span>
+        </h2>
+        <p id="subtitle-text" class="opacity-0 text-xl md:text-2xl text-gray-200 font-light"></p>
+    </div>
+</div>
+
+<link rel="stylesheet" href="/src/components/welcome/welcome.css" />
+<script type="module" src="/src/components/welcome/welcome.js"></script>
