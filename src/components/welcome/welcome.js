@@ -263,7 +263,7 @@ function initTypingEffect() {
     }
 
     const text = 'Welcome';
-    const subtitle = 'Select a section from the sidebar to know me.';
+    const subtitle = `Select a section from ${window.innerWidth <= 768 ? 'below' : 'the sidebar'} to know me.`
     let charIndex = 0;
 
     function typeChar() {
