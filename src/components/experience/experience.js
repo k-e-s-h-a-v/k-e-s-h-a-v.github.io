@@ -65,13 +65,17 @@ const experienceData = [
     }
 ];
 
-function initExperience() {
+// Desktop: Ancient map style with curved path
+function initExperienceDesktop() {
     const container = document.querySelector('.milestones-container');
     const expContainer = document.querySelector('.experience-container');
     const svg = document.querySelector('.road-svg');
     const svgPath = document.querySelector('.road-path');
 
     if (!container || !svg || !svgPath || !expContainer) return;
+
+    // Show SVG
+    svg.style.display = 'block';
 
     let blurPath = svg.querySelector('.road-path-blur');
     if (!blurPath) {
@@ -108,7 +112,6 @@ function initExperience() {
 
     container.innerHTML = '';
 
-    // Create a separate container for popups to avoid transform issues
     let popupsOverlay = document.getElementById('experience-popups-overlay');
     if (!popupsOverlay) {
         popupsOverlay = document.createElement('div');
@@ -123,7 +126,6 @@ function initExperience() {
 
         const milestoneEl = document.createElement('div');
         milestoneEl.className = `milestone ${m.isLeft ? 'on-left' : 'on-right'}`;
-        // Mark Infor as current milestone
         if (exp.company === "Infor" && exp.date.includes("Present")) {
             milestoneEl.classList.add('is-current');
         }
@@ -232,7 +234,7 @@ function initExperience() {
 
             const distance = Math.sqrt(Math.pow(e.clientX - markerX, 2) + Math.pow(e.clientY - markerY, 2));
 
-            if (distance < 50) { // Reduced radius to 50px
+            if (distance < 50) {
                 popup.style.opacity = '1';
                 popup.style.visibility = 'visible';
 
@@ -268,6 +270,82 @@ function initExperience() {
     }
     window._experienceMouseMoveHandler = handleMouseMove;
     window.addEventListener('mousemove', handleMouseMove);
+}
+
+// Mobile: Modern card design with straight timeline
+function initExperienceMobile() {
+    const container = document.querySelector('.milestones-container');
+    const expContainer = document.querySelector('.experience-container');
+    const svg = document.querySelector('.road-svg');
+
+    if (!container || !expContainer) return;
+
+    // Hide SVG on mobile
+    if (svg) svg.style.display = 'none';
+
+    container.innerHTML = '';
+    expContainer.style.height = 'auto';
+
+    // Create modern timeline
+    const timeline = document.createElement('div');
+    timeline.className = 'modern-timeline';
+    container.appendChild(timeline);
+
+    experienceData.forEach((exp, i) => {
+        const card = document.createElement('div');
+        card.className = 'experience-card';
+        if (exp.company === "Infor" && exp.date.includes("Present")) {
+            card.classList.add('is-current');
+        }
+
+        card.innerHTML = `
+            <div class="card-dot"></div>
+            <div class="card-content">
+                <div class="card-header">
+                    ${exp.logo ? `<img src="${exp.logo}" class="card-logo" alt="${exp.company}">` : ''}
+                    <div class="card-title-group">
+                        <h3 class="card-title">${exp.role}</h3>
+                        <p class="card-company">${exp.company}</p>
+                    </div>
+                </div>
+                <div class="card-meta">
+                    <span class="card-date">${exp.date}</span>
+                    <span class="card-location">${exp.location}</span>
+                </div>
+                <ul class="card-bullets">
+                    ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+
+        timeline.appendChild(card);
+    });
+}
+
+function initExperience() {
+    const mapHint = document.querySelector('.experience-map-hint');
+    const isMobile = window.innerWidth < 768;
+
+    if (mapHint) {
+        mapHint.textContent = isMobile ? 'Tap to explore' : 'Hover over milestones to see details';
+    }
+
+    if (isMobile) {
+        initExperienceMobile();
+    } else {
+        initExperienceDesktop();
+    }
+
+    // Re-initialize on window resize
+    if (!window._experienceResizeHandler) {
+        window._experienceResizeHandler = () => {
+            clearTimeout(window._experienceResizeTimeout);
+            window._experienceResizeTimeout = setTimeout(() => {
+                initExperience();
+            }, 250);
+        };
+        window.addEventListener('resize', window._experienceResizeHandler);
+    }
 }
 
 document.body.addEventListener('htmx:afterSwap', (e) => {
